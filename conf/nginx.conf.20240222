@@ -1,0 +1,164 @@
+worker_processes 1;
+
+env AWS_ACCESS_KEY_ID;
+env AWS_SECRET_ACCESS_KEY;
+
+events {
+  worker_connections 1024;
+}
+
+# error_log logs/error.log debug;
+error_log  logs/error.log  debug;
+
+http {
+  default_type  application/octet-stream;
+  map_hash_bucket_size 256;
+
+  lua_package_path "$prefix/lua/?.lua;$prefix/resty_modules/lualib/?.lua;;";
+  lua_package_cpath "$prefix/resty_modules/lualib/?.so;;";
+  log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+    '$status $body_bytes_sent "$http_referer" ["$http_authorization"] - [$http_host] - [$request_uri] [arg: $args] '
+    '"$http_x_amz_content_sha256" - "$http_x_amz_date" - "$http_x_amz_expires" - "$http_x_amz_signature" - "$http_x_amz_signedheaders" - "[$rewrite_result]"';
+    # '"Body: $request_body"';
+  log_format  debug  '$remote_addr - $remote_user [$time_local] "$request" - [$rewrite_result]';
+  access_log  logs/access.log  main;
+
+  lua_need_request_body on;
+  # 從 rewrite 從取後 $1
+  # map $args $final {
+    # "~*encoding-type=url" "http://$s3_host/bucket3-rclone$1";
+    # "~*location=" "http://$s3_host/bucket3-rclone$1";
+    # "~*versioning" "http://$s3_host/bucket3-rclone$1";
+    # "~*delimiter=%2F&uploads=" "http://$s3_host/bucket3-rclone$1";
+    # "~*object-lock=" "http://$s3_host/bucket3-rclone$1";
+    # "~*delimiter=%2F&max-keys=1000&prefix=" "http://$s3_host/bucket3-rclone$1";
+    # "" "http://$s3_host/bucket3-rclone$1";
+    # default "http://$s3_host/bucket3-rclone$1?$args";
+  # }
+
+  # $http_host = host without port = web server's IP
+  server {
+    listen 10443;
+    listen [::]:10443;
+
+    # 影響是否可以在 access log 中顯示 request_body 的內容
+    client_body_buffer_size 50M;
+    # client_body_buffer_size 1K;
+    client_max_body_size 100M;
+
+    set $proxyserver 192.168.61.105:10443;
+    set $s3_host 192.168.61.140:10443;
+    set $s3_uri $request_uri;
+    set $rewrite_result ok;
+    set $final http://$s3_host/bucket3-rclone;
+    set $new_method GET;
+
+    location /bucket1 {
+    # location ~ ^/bucket1(?:$|-[^\-]+) {
+    # location ~ /([^\/-]+) {
+        proxy_set_header Authorization "";
+        more_set_headers "x-amz-date: ";
+        add_header X-Amz-Content-Sha256 "";
+        # rewrite ^/[^/[^\/-]]+(/[^\/-]+)$ $1 break;
+        # 2024/2/21
+        set $cd "";
+        # Check upload's query string
+        if ($args ~* "uploads=") {
+          set $cd U;
+        }
+
+        # capture the filename
+        if ($uri ~* "^/[^/]+(/.*)$") {
+          set $rewrite_result $1;
+          set $cd "${cd}M";
+          access_log  logs/debug.log  debug;
+        }
+
+        # for upload
+        if ($cd = UM) {
+          set $final http://$s3_host/bucket3-rclone$1;
+        }
+        if ($request_method ~ ^(PUT|POST)$) {
+          set $final http://$s3_host/bucket3-rclone$rewrite_result;
+          set $cd UM;
+          set $new_method PUT;
+        }
+
+        # for others
+        if ($cd !~* UM) {
+          set $final http://$s3_host/bucket3-rclone;
+        }
+        # if got a filename
+        if ($rewrite_result !~ ok) {
+          set $cd GUM;
+        }
+        if ($request_method = GET) {
+          set $cd "${cd}F";
+          set $new_method GET;
+        }
+        if ($request_method = DELETE) {
+          set $cd "${cd}D";
+          set $new_method DELETE;
+        }
+        if ($request_method = POST) {
+          # set $new_method PUT;
+          set $new_method POST;
+        }
+        if ($request_method = HEAD) {
+          set $new_method HEAD;
+        }
+        if ($cd = GUMF) {
+          set $final http://$s3_host/bucket3-rclone$rewrite_result;
+        }
+        if ($cd = GUMD) {
+          set $final http://$s3_host/bucket3-rclone$rewrite_result;
+        }
+        # if ($arg_encoding-type = "url") {
+          # return 403;
+        # }
+
+        rewrite ^/[^/]+(/.*)$ $1 break;
+        proxy_method $new_method;
+        proxy_pass $final;
+        proxy_set_header Host $http_host;
+        proxy_http_version 1.1;
+        proxy_request_buffering off;
+    }
+
+    location / {
+        if ($http_authorization = "") {
+          access_by_lua_block {
+            ngx.log(ngx.ERR, "s3_uri String............. " .. ngx.var.s3_uri)
+            require("resty.aws-signature").s3_set_headers(ngx.var.s3_host, ngx.var.s3_uri)
+          }
+          break;
+        }
+
+        access_by_lua_block {
+          local function log_request_body()
+            -- local ok, err = ngx.req.read_body()
+            local ok, err = ngx.req.get_body_data()
+            if not ok then
+              ngx.log(ngx.ERR, "Failed to read request body: ", err)
+              return
+            end
+
+            local body = ngx.req.get_body_data()
+            if body then
+              ngx.log(ngx.NOTICE, "Request body: ", body)
+            else
+              ngx.log(ngx.NOTICE, "Request body is empty")
+            end
+          end
+
+          ngx.log(ngx.ERR, "Query String............. " .. ngx.var.s3_uri)
+          log_request_body()
+        }
+        proxy_pass http://$proxyserver;
+        proxy_set_header Host $http_host;
+        proxy_http_version 1.1;
+        # proxy_set_header Authorization $http_authorization;  # 将原始请求的 Authorization 头传递给 S3
+        # proxy_set_header x-amz-date $http_x_amz_date;  # 将原始请求的 x-amz-date 头传递给 S3
+    }
+  }
+}

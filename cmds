@@ -1,0 +1,114 @@
+  233  aws s3api list-objects --bucket bucket1 --endpoint-url http://192.168.61.140:10443
+  243  aws s3api list-objects --bucket bucket1-rclone --endpoint-url http://192.168.61.140:10443
+  297  aws s3api put-object --bucket bucket1 --key test.txt --body test.txt --endpoint-url http://192.168.61.140:10443
+  299  aws s3api list-objects --bucket bucket3-rclone --endpoint-url http://192.168.61.140:10443
+  300  aws s3api get-object --bucket bucket1 --key test.txt test.txt.aws --endpoint-url http://192.168.61.140:10443
+  304  aws s3api delete-object --bucket bucket1 --key test.txt --endpoint-url http://192.168.61.140:10443
+  309  aws s3api list-objects --bucket bucket1 --endpoint-url http://192.168.61.140:10443
+  332  aws s3api put-object --bucket bucket1 --key test_1.txt --body test_1.txt --endpoint-url http://192.168.61.140:10443
+  404  aws s3api put-object --bucket bucket1 --key test_1.txt --body test_1.txt --endpoint-url http://192.168.61.140:10443
+  409  aws s3api put-object --bucket bucket1 --key test_1.txt --body test_1.txt --endpoint-url http://192.168.61.140:10443
+  413  aws s3api put-object --bucket bucket1 --key test_1.txt --body test_1.txt --endpoint-url http://192.168.61.140:10443
+  646  aws s3api list-objects --bucket bucket1 --endpoint-url http://192.168.61.140:10443
+  647  aws s3api put-object --bucket bucket1 --key test_1.txt --body test_1.txt --endpoint-url http://192.168.61.140:10443
+  648  aws s3api put-object --bucket bucket1 --key test1.txt --body test_1.txt --endpoint-url http://192.168.61.140:10443
+  654  aws s3api list-objects --bucket bucket1 --endpoint-url http://192.168.61.140:10443
+  655  aws s3api put-object --bucket bucket1 --key test_1.txt --body test_1.txt --endpoint-url http://192.168.61.140:10443
+  659  aws s3api put-object --bucket bucket1 --key test_1.txt --body test_1.txt --endpoint-url http://192.168.61.140:10443
+  663  aws s3api put-object --bucket bucket1 --key test_1.txt --body test_1.txt --endpoint-url http://192.168.61.140:10443
+  667  aws s3api put-object --bucket bucket1 --key test_1.txt --body test_1.txt --endpoint-url http://192.168.61.140:10443
+  671  aws s3api put-object --bucket bucket1 --key test_1.txt --body test_1.txt --endpoint-url http://192.168.61.140:10443
+  676  aws s3api put-object --bucket bucket1 --key test_1.txt --body test_1.txt --endpoint-url http://192.168.61.140:10443
+  679  aws s3api put-object --bucket bucket1 --key test_1.txt --body test_1.txt --endpoint-url http://192.168.61.140:10443
+  683  aws s3api put-object --bucket bucket1 --key test_1.txt --body test_1.txt --endpoint-url http://192.168.61.140:10443
+  686  aws s3api put-object --bucket bucket1 --key test_1.txt --body test_1.txt --endpoint-url http://192.168.61.140:10443
+  690  aws s3api put-object --bucket bucket1 --key test_1.txt --body test_1.txt --endpoint-url http://192.168.61.140:10443
+  694  aws s3api put-object --bucket bucket1 --key test_1.txt --body test_1.txt --endpoint-url http://192.168.61.140:10443
+  698  aws s3api put-object --bucket bucket1 --key test_1.txt --body test_1.txt --endpoint-url http://192.168.61.140:10443
+  699  aws s3api list-objects --bucket bucket1 --endpoint-url http://192.168.61.140:10443
+  700  aws s3api put-object --bucket bucket1 --key test.txt --body test_1.txt --endpoint-url http://192.168.61.140:10443
+  701  aws s3api list-objects --bucket bucket1 --endpoint-url http://192.168.61.140:10443
+  702  aws s3api get-object --bucket bucket1 --key test.txt test.txt.aws --endpoint-url http://192.168.61.140:10443
+  711  aws s3api get-object --bucket bucket1 --key test.txt test.txt.aws --endpoint-url http://192.168.61.140:10443
+  715  aws s3api get-object --bucket bucket1 --key test.txt test.txt.aws --endpoint-url http://192.168.61.140:10443
+  720  aws s3api put-object --bucket bucket1 --key test_1.txt --body test_1.txt --endpoint-url http://192.168.61.140:10443
+  721  aws s3api put-object --bucket bucket1 --key test.txt --body test_1.txt --endpoint-url http://192.168.61.140:10443
+  722  aws s3api list-objects --bucket bucket1 --endpoint-url http://192.168.61.140:10443
+  723  aws s3api get-object --bucket bucket1 --key test.txt test.txt.aws --endpoint-url http://192.168.61.140:10443
+  726  aws s3api delete-object --bucket bucket1 --key test.txt --endpoint-url http://192.168.61.140:10443
+  729  aws s3api delete-object --bucket bucket1 --key test.txt --endpoint-url http://192.168.61.140:10443
+  730  aws s3api list-objects --bucket bucket1 --endpoint-url http://192.168.61.140:10443
+  732  aws s3api put-object --bucket bucket1 --key test_1.txt --body test_1.txt --endpoint-url http://192.168.61.140:10443
+  733  aws s3api put-object --bucket bucket1 --key test.txt --body test_1.txt --endpoint-url http://192.168.61.140:10443
+  734  aws s3api list-objects --bucket bucket1 --endpoint-url http://192.168.61.140:10443
+  735  aws s3api get-object --bucket bucket1 --key test.txt test.txt.aws --endpoint-url http://192.168.61.140:10443
+  738  aws s3api delete-object --bucket bucket1 --key test.txt --endpoint-url http://192.168.61.140:10443
+  739  aws s3api list-objects --bucket bucket1 --endpoint-url http://192.168.61.140:10443
+  777  aws s3api put-object --bucket bucket1 --key test_1.txt --body test_1.txt --endpoint-url http://192.168.61.140:10443
+  794  aws s3api put-object --bucket bucket1 --key test_1.txt --body test_1.txt --endpoint-url http://192.168.61.140:10443
+  803  aws s3api put-object --bucket bucket1 --key test_1.txt --body test_1.txt --endpoint-url http://192.168.61.140:10443
+  804  aws s3api put-object --bucket bucket1 --key test.txt --body test_1.txt --endpoint-url http://192.168.61.140:10443
+  805  aws s3api list-objects --bucket bucket1 --endpoint-url http://192.168.61.140:10443
+  806  aws s3api get-object --bucket bucket1 --key test.txt test.txt.aws --endpoint-url http://192.168.61.140:10443
+  809  aws s3api delete-object --bucket bucket1 --key test.txt --endpoint-url http://192.168.61.140:10443
+  810  aws s3api list-objects --bucket bucket1 --endpoint-url http://192.168.61.140:10443
+  825  aws s3api put-object --bucket bucket1 --key file.img --body file.img --endpoint-url http://192.168.61.140:10443
+  826  aws s3api list-objects --bucket bucket1 --endpoint-url http://192.168.61.140:10443
+  827  aws s3api delete-object --bucket bucket1 --key file.img --endpoint-url http://192.168.61.140:10443
+  829  aws s3api put-object --bucket bucket1 --key file.img --body file.img --endpoint-url http://192.168.61.140:10443
+  830  aws s3api delete-object --bucket bucket1 --key file.img --endpoint-url http://192.168.61.140:10443
+  896  aws s3api list-objects --bucket bucket1 --endpoint-url http://192.168.61.140:10443/CTBC
+  897  aws s3api list-objects --bucket bucket1 --endpoint-url http://192.168.61.140:10443
+  898  aws s3api get-object --bucket bucket1 --key CTBC/123.xlsx 123.xlsx.aws --endpoint-url http://192.168.61.140:10443
+  900  aws s3api put-object --bucket bucket1 --key CTBC/test.txt --body test_1.txt --endpoint-url http://192.168.61.140:10443
+  901  aws s3api list-objects --bucket bucket1 --endpoint-url http://192.168.61.140:10443 --prefix=CTBC
+  902  aws s3api list-objects --bucket bucket1 --endpoint-url http://192.168.61.140:10443 --prefix=CTBC/
+  907  aws s3api list-objects --bucket bucket1 --endpoint-url http://192.168.61.140:10443 --prefix=CTBC/
+  909  aws s3api list-directories --bucket bucket1 --endpoint-url http://192.168.61.140:10443
+  910  aws s3api list-directories --endpoint-url http://192.168.61.140:10443
+  916  aws s3api list-objects --bucket bucket1 --endpoint-url http://192.168.61.140:10443 --prefix=CTBC/
+  920  aws s3api list-objects --bucket bucket1 --endpoint-url http://192.168.61.140:10443 --prefix=CTBC/
+  924  aws s3api list-objects --bucket bucket1 --endpoint-url http://192.168.61.140:10443 --prefix=CTBC/
+  928  aws s3api list-objects --bucket bucket1 --endpoint-url http://192.168.61.140:10443 --prefix=CTBC/
+  931  aws s3api list-objects --bucket bucket1 --endpoint-url http://192.168.61.140:10443 --prefix=CTBC/
+  935  aws s3api list-objects --bucket bucket1 --endpoint-url http://192.168.61.140:10443 --prefix=CTBC/
+  939  aws s3api list-objects --bucket bucket1 --endpoint-url http://192.168.61.140:10443 --prefix=CTBC/
+  943  aws s3api list-objects --bucket bucket1 --endpoint-url http://192.168.61.140:10443 --prefix=CTBC/
+  947  aws s3api list-objects --bucket bucket1 --endpoint-url http://192.168.61.140:10443 --prefix=CTBC/
+  951  aws s3api list-objects --bucket bucket1 --endpoint-url http://192.168.61.140:10443 --prefix=CTBC/
+  956  aws s3api list-objects --bucket bucket1 --endpoint-url http://192.168.61.140:10443 --prefix=CTBC/
+  959  aws s3api list-objects --bucket bucket1 --endpoint-url http://192.168.61.140:10443 --prefix=CTBC/
+  980  aws s3api list-objects --bucket bucket1 --endpoint-url http://192.168.61.140:10443 --prefix=CTBC/
+  985  aws s3api list-objects --bucket bucket1 --endpoint-url http://192.168.61.140:10443 --prefix=CTBC/
+  988  aws s3api list-objects --bucket bucket1 --endpoint-url http://192.168.61.140:10443 --prefix=CTBC/
+  991  aws s3api list-objects --bucket bucket1 --endpoint-url http://192.168.61.140:10443 --prefix=CTBC/
+  995  aws s3api list-objects --bucket bucket1 --endpoint-url http://192.168.61.140:10443 --prefix=CTBC
+  996  aws s3api list-objects --bucket bucket1 --endpoint-url http://192.168.61.140:10443 --prefix=CTBC/
+ 1005  aws s3api list-objects --bucket bucket1 --endpoint-url http://192.168.61.140:10443 --prefix=CTBC/
+ 1012  aws s3api list-objects --bucket bucket1 --endpoint-url http://192.168.61.140:10443 --prefix=CTBC/
+ 1016  aws s3api list-objects --bucket bucket1 --endpoint-url http://192.168.61.140:10443 --prefix=CTBC/
+ 1020  aws s3api list-objects --bucket bucket1 --endpoint-url http://192.168.61.140:10443 --prefix=CTBC/
+ 1023  aws s3api list-objects --bucket bucket1 --endpoint-url http://192.168.61.140:10443 --prefix=CTBC/
+ 1027  aws s3api list-objects --bucket bucket1 --endpoint-url http://192.168.61.140:10443 --prefix=CTBC/
+ 1031  aws s3api list-objects --bucket bucket1 --endpoint-url http://192.168.61.140:10443 --prefix=CTBC/
+ 1035  aws s3api list-objects --bucket bucket1 --endpoint-url http://192.168.61.140:10443 --prefix=CTBC/
+ 1042  aws s3api list-objects --bucket bucket1 --endpoint-url http://192.168.61.140:10443 --prefix=CTBC/
+ 1046  aws s3api list-objects --bucket bucket1 --endpoint-url http://192.168.61.140:10443 --prefix=CTBC/
+ 1050  aws s3api list-objects --bucket bucket1 --endpoint-url http://192.168.61.140:10443 --prefix=CTBC/
+ 1054  aws s3api list-objects --bucket bucket1 --endpoint-url http://192.168.61.140:10443 --prefix=CTBC/
+ 1058  aws s3api list-objects --bucket bucket1 --endpoint-url http://192.168.61.140:10443 --prefix=CTBC/
+ 1062  aws s3api list-objects --bucket bucket1 --endpoint-url http://192.168.61.140:10443 --prefix=CTBC/
+ 1066  aws s3api list-objects --bucket bucket1 --endpoint-url http://192.168.61.140:10443 --prefix=CTBC/
+ 1070  aws s3api list-objects --bucket bucket1 --endpoint-url http://192.168.61.140:10443 --prefix=CTBC/
+ 1074  aws s3api list-objects --bucket bucket1 --endpoint-url http://192.168.61.140:10443 --prefix=CTBC/
+ 1078  aws s3api list-objects --bucket bucket1 --endpoint-url http://192.168.61.140:10443 --prefix=CTBC/
+ 1081  aws s3api list-objects --bucket bucket1 --endpoint-url http://192.168.61.140:10443 --prefix=CTBC/
+ 1084  aws s3api list-objects --bucket bucket1 --endpoint-url http://192.168.61.140:10443 --prefix=CTBC/
+ 1088  aws s3api list-objects --bucket bucket1 --endpoint-url http://192.168.61.140:10443 --prefix=CTBC/
+ 1092  aws s3api list-objects --bucket bucket1 --endpoint-url http://192.168.61.140:10443 --prefix=CTBC/
+ 1098  aws s3api list-objects --bucket bucket1 --endpoint-url http://192.168.61.140:10443 --prefix=CTBC/
+ 1102  aws s3api list-objects --bucket bucket1 --endpoint-url http://192.168.61.140:10443 --prefix=CTBC/
+ 1106  aws s3api list-objects --bucket bucket1 --endpoint-url http://192.168.61.140:10443 --prefix=CTBC/
+ 1208  aws s3api list-objects --bucket bucket1 --endpoint-url http://192.168.61.140:10443 --prefix=CTBC/
+ 1209  history |grep "aws s3"
+ 1210  history |grep "aws s3" > cmds
