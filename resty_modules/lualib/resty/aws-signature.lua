@@ -44,7 +44,7 @@ end
 local function get_credentials ()
   local access_key = os.getenv('AWS_ACCESS_KEY_ID')
   local secret_key = os.getenv('AWS_SECRET_ACCESS_KEY')
-  ngx.log(ngx.ERR, "key: " .. access_key .. "\n secret: " .. secret_key)
+  ngx.log(ngx.INFO, "key: " .. access_key .. "\n secret: " .. secret_key)
   local str = ngx.req.get_headers()["authz"]
   ngx.log(ngx.DEBUG, "Authz content: " .. str)
   local start_pos, end_pos = string.find(str, "Credential=(.-)/")
@@ -55,7 +55,7 @@ local function get_credentials ()
     secret_key = get_secretKey(credential)
     ngx.log(ngx.INFO, "Secret Key: " .. secret_key)
   else
-    ngx.log(ngx.INFO, "未找到 Credential 字串")
+    ngx.log(ngx.ERR, "Not found the Credential")
   end
   return {
     access_key = access_key,
@@ -120,27 +120,29 @@ local function get_endcoded_query_str()
   end
   for key, val in pairs(uri_args) do
     if type(val) == 'table' then
-      ngx.log(ngx.ERR, "val is a table...")
+      ngx.log(ngx.DEBUG, "val is a table...")
     end
     table.insert(keys, key)
   end
   table.sort(keys)
-  -- table.sort(uri_args)
   for i, key in pairs(keys) do
     if tostring(uri_args[key]) == "" then
-      ngx.log(ngx.ERR, "After Query String............. " .. i .. ": Empry String")
+      ngx.log(ngx.INFO, "Query String............. " .. i .. ": Empry String")
     else
-      ngx.log(ngx.ERR, "After Query String............. " .. i .. ": " .. tostring(uri_args[key]))
+      ngx.log(ngx.DEBUG, "Query String............. " .. i .. ": " .. tostring(uri_args[key]))
     end
+    -- 如果多於一個參數
     if i > 1 then
       encode_str = encode_str .. "&"
     end
+    -- 判斷參數後是否有=, 沒有=則顯示為true
     if uri_args[key] == true then
       encode_str = encode_str .. ngx.escape_uri(key)
     else
       encode_str = encode_str .. ngx.escape_uri(key) .. "=" .. ngx.escape_uri(uri_args[key])
     end
   end
+
   if encode_str ~= "" then
     -- ngx.log(ngx.ERR, "i String............. " .. i) 
     encode_str = encode_str .. "\n"
@@ -152,15 +154,11 @@ end
 
 local function get_hashed_canonical_request(timestamp, host, uri)
   local str = get_endcoded_query_str()
-  ngx.log(ngx.ERR, "get_hashed_canonical_request: " .. str)
+  ngx.log(ngx.DEBUG, "get_hashed_canonical_request: " .. str)
   local digest = get_sha256_digest(ngx.var.request_body)
   local canonical_request = ngx.var.request_method .. '\n'
-    -- .. uri .. '\n'
     .. uri .. '\n'
-    -- .. ngx.escape_uri('encoding-type') .. '=' .. ngx.escape_uri('url') .. '&'
-    -- .. ngx.escape_uri('prefix') .. '=' .. ngx.escape_uri('CTBC/') .. '\n'
     .. str
-    -- .. ngx.escape_uri('prefix=CTBC/') .. '\n'
     .. 'host:' .. host .. '\n'
     .. 'x-amz-content-sha256:' .. digest .. '\n'
     .. 'x-amz-date:' .. get_iso8601_basic(timestamp) .. '\n'
@@ -217,7 +215,7 @@ function _M.aws_set_headers(host, uri, creds)
     creds = get_credentials()
   end
   local timestamp = tonumber(ngx.time())
-  ngx.log(ngx.ERR, "\ntimestamp: " .. get_iso8601_basic(timestamp) .. "\n")
+  ngx.log(ngx.DEBUG, "\ntimestamp: " .. get_iso8601_basic(timestamp) .. "\n")
   -- local service, region = get_service_and_region(host)
   local service ='s3'
   local region = 'us-east-1'
